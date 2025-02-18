@@ -41,6 +41,7 @@
   height: 320px;
   margin-top: 50px; /*affects space from top of grid */
   margin-left: 200px;
+
 }
 
 .mark {
@@ -76,12 +77,21 @@
   grid-auto-rows: 27px;
   column-gap: 10px;
   row-gap: 5px;
-
-
   padding: 10px;
   border: 1px solid #aaa;
   border-radius: 16px;
   background-color: #f3ebe0;
   height: 180px;
 
+}
+
+.randomResource{
+  margin-left:1550px;
+  margin-top: -200px;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 16px;
+  background-color: #f3ebe0;
+  max-width: 150px;
+  height: 180px;
 }
