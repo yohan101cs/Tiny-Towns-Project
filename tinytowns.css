@@ -55,10 +55,6 @@
   margin: auto;
 }
 
-.selectable:hover {
-  background: #ff0;
-  cursor: pointer;
-}
 
 .resourceCards {
   grid-area: resourceCards;
@@ -67,8 +63,10 @@
   grid-auto-flow: column;
   gap: 5px 5px;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   margin-left: 900px;
+  margin-top: -150px;
+
   
 }
 .resource {
@@ -81,17 +79,84 @@
   border: 1px solid #aaa;
   border-radius: 16px;
   background-color: #f3ebe0;
-  height: 180px;
+  height: 280px;
 
 }
 
 .randomResource{
-  margin-left:1550px;
-  margin-top: -200px;
+  margin-left:1600px;
+  margin-top: -300px;
   padding: 10px;
   border: 1px solid #aaa;
   border-radius: 16px;
   background-color: #f3ebe0;
-  max-width: 150px;
-  height: 180px;
+  max-width: 200px;
+  height: 280px;
+  text-align: center; 
+
+  
+}
+
+.resource {
+  display: flex;           /* Use Flexbox */
+  flex-direction: column;  /* Stack elements vertically */
+  align-items: center;     /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  text-align: center;      /* Ensures text aligns properly */
+  position: relative;      /* Ensures child elements can be positioned relative to the card */
+}
+
+.outline {
+  color: #fff;
+  text-shadow: 
+  -1px -1px 0 #666,
+  1px -1px 0 #666,
+  -1px 1px 0 #666,
+  1px 1px 0 #666; 
+}
+
+span.resourceWood::after {
+  color: brown;
+  text-shadow: 
+  -1px -1px 0 #666,
+  1px -1px 0 #666,
+  -1px 1px 0 #666,
+  1px 1px 0 #666; 
+  content: "\25A0";
+  font-size: 200px;
+}
+
+
+span.resourceWheat::after {
+  color: yellow;
+  text-shadow: 
+  -1px -1px 0 #666,
+  1px -1px 0 #666,
+  -1px 1px 0 #666,
+  1px 1px 0 #666; 
+  content: "\25A0";
+  font-size: 200px;
+}
+
+
+span.resourceBrick::after {
+  color: red;
+  text-shadow: 
+  -1px -1px 0 #666,
+  1px -1px 0 #666,
+  -1px 1px 0 #666,
+  1px 1px 0 #666; 
+  content: "\25A0";
+  font-size: 200px;
+}
+
+span.buildingCottage::after {
+  color: red;
+  text-shadow: 
+  -1px -1px 0 #666,
+  1px -1px 0 #666,
+  -1px 1px 0 #666,
+  1px 1px 0 #666; 
+  content: "\2302";
+  font-size: 200px;
 }
