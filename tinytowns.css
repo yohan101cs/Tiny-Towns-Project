@@ -10,21 +10,20 @@
   max-width: 2000px;
 }
 
-
-.location {
-    display: grid;
-    grid-template-columns: 45px 1fr;
-    grid-auto-rows: 27px;
-    column-gap: 10px;
-    row-gap: 5px;
-  
+  .location {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    text-align: center; /* Ensure text aligns properly */
   
     padding: 10px;
     border: 1px solid #aaa;
     border-radius: 16px;
     background-color: #f3ebe0;
     height: 180px;
-  }
+}
+
 
   .name {
     /* make sure the cathedral card text all in one line */
@@ -105,16 +104,6 @@
   text-align: center;      /* Ensures text aligns properly */
   position: relative;      /* Ensures child elements can be positioned relative to the card */
 }
-
-.outline {
-  color: #fff;
-  text-shadow: 
-  -1px -1px 0 #666,
-  1px -1px 0 #666,
-  -1px 1px 0 #666,
-  1px 1px 0 #666; 
-}
-
 /* resources */
 span.resourceWood::after {
   color: brown;
@@ -173,6 +162,7 @@ span.resourceStone::after {
   content: "\25A0";
   font-size: 200px;
 }
+
 
 
 /* Buildings */
@@ -265,3 +255,6 @@ span.buildingCathedralOfCaterina::after {
   content: "\2302";
   font-size: 50px;
 }
+
+
+ 
