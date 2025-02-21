@@ -1,5 +1,6 @@
 
 
+
 .locations {
   grid-area: locations;
   display: grid;
@@ -45,6 +46,8 @@
 
 .mark {
   display: flex;
+  background-color: bisque;
+  border-radius: 12px;
   justify-content: center;
   align-items: center;
   font-size: 64px;
@@ -107,6 +110,8 @@
   position: relative;      /* Ensures child elements can be positioned relative to the card */
 }
 /* resources */
+
+
 span.resourceWood::after {
   color: brown;
   text-shadow: 
