@@ -12,46 +12,99 @@
         <div id="cottageLocation" class="location">
             <div class="name">Cottage</div>
             <span class="outline buildingCottage"></span>
+            <div class="resourcesCottage">
+                <span class="outline empty"></span>
+                <span class="outline resourceWheat"></span>
+                <span class="outline resourceBrick"></span>
+                <span class="outline resourceGlass"></span>
+            </div>
             <div  class="function">3 points if this building is fed</div>
         </div>
         <div id="chapelLocation" class="location">
             <div class="name">Chapel</div>
             <span class="outline buildingChapel"></span>
+            <div class="resourcesChapel">
+                <span class="outline empty"></span>
+                <span class="outline empty"></span>
+                <span class="outline resourceGlass"></span>
+                <span class="outline resourceStone"></span>
+                <span class="outline resourceGlass"></span>
+                <span class="outline resourceStone"></span>
+            </div>
             <div  class="function">1 point for each cottage fed</div>
 
         </div>
         <div id="farmLocation" class="location">
             <div class="name">Farm</div>
             <span class="outline buildingFarm"></span>
+            <div class="resourcesFarm">
+                <span class="outline resourceWheat"></span>
+                <span class="outline resourceWheat"></span>
+                <span class="outline resourceWood"></span>
+                <span class="outline resourceWood"></span>
+            </div>
             <div  class="function">Feeds up to 4 cottages</div>
 
         </div>
         <div id="tavernLocation" class="location">
             <div class="name">Tavern</div>
             <span class="outline buildingTavern"></span>
+            <div class="resourcesTavern">
+                <span class="outline resourceBrick"></span>
+                <span class="outline resourceBrick"></span>
+                <span class="outline resourceGlass"></span>
+            </div>
             <div  class="function">1 tavern = 2 points, 2 tavern = 5 points, 3 tavern = 9 points, 4 tavern = 14 points, 5 taverns = 20 points</div>
 
         </div>
         <div id="wellLocation" class="location">
             <div class="name">Well</div>
             <span class="outline buildingWell"></span>
+            <div class="resourcesWell">
+                <span class="outline resourceWood"></span>
+                <span class="outline resourceStone"></span>
+            </div>
             <div  class="function">1 point for each adjacent cottage</div>
         </div>
         <div id="theaterLocation" class="location">
             <div class="name">Theater</div>
             <span class="outline buildingTheater"></span>
+            <div class="resourcesTheater">
+                <span class="outline empty"></span>
+                <span class="outline resourceStone"></span>
+                <span class="outline empty"></span>
+                <span class="outline resourceWood"></span>
+                <span class="outline resourceGlass"></span>
+                <span class="outline resourceWood"></span>
+            </div>
             <div  class="function">1 point for each unique building on the same row or column as this card</div>
 
         </div>
         <div id="factoryLocation" class="location">
             <div class="name">Factory</div>
             <span class="outline buildingFactory"></span>
+            <div class="resourcesFactory">
+                <span class="outline resourceWood"></span>
+                <span class="outline empty"></span>
+                <span class="outline empty"></span>
+                <span class="outline empty"></span>
+                <span class="outline resourceBrick"></span>
+                <span class="outline resourceStone"></span>
+                <span class="outline resourceStone"></span>
+                <span class="outline resourceBrick"></span>
+            </div>
             <div  class="function">When constructed, place 1 of the 5 resources on the building. When another player names this resource , you may place a different resource instead</div>
 
         </div>
         <div id="cathedralOfCaterinaLocation" class="location">
             <div class="name">Cathedral Of Caterina</div>
             <span class="outline buildingCathedralOfCaterina"></span>
+            <div class="resourcesCathedral">
+                <span class="outline empty"></span>
+                <span class="outline resourceWheat"></span>
+                <span class="outline resourceStone"></span>
+                <span class="outline resourceGlass"></span>
+            </div>
             <div  class="function">2 points. Empty squares in your town are worth 0 points(instead of -1 points)</div>
 
         </div>
@@ -60,23 +113,23 @@
     <!-- this represents the board the player acts upon -->
     <div class="board">
         <div id="m11" class="mark selectable"><span class="outline resourceWood"></span></div>
-        <div id="m12" class="mark selectable"></div>
+        <div id="m12" class="mark selectable"><span class="outline buildingCathedralOfCaterina"></span></div>
         <div id="m13" class="mark selectable"></div>
-        <div id="m14" class="mark selectable"></div>
+        <div id="m14" class="mark selectable"><span class="outline resourceWheat"></span></div>
     
-        <div id="m21" class="mark selectable"></div>
-        <div id="m22" class="mark selectable"></div>
+        <div id="m21" class="mark selectable"><span class="outline resourceWheat"></span></div>
+        <div id="m22" class="mark selectable"><span class="outline resourceWood"></span></div>
         <div id="m23" class="mark selectable"></div>
-        <div id="m24" class="mark selectable"></div>
+        <div id="m24" class="mark selectable"><span class="outline resourceWood"></span></div>
     
         <div id="m31" class="mark selectable"></div>
-        <div id="m32" class="mark selectable"></div>
+        <div id="m32" class="mark selectable"><span class="outline buildingFarm"></span></div>
         <div id="m33" class="mark selectable"></div>
         <div id="m34" class="mark selectable"></div>
     
-        <div id="m41" class="mark selectable"></div>
-        <div id="m42" class="mark selectable"></div>
-        <div id="m43" class="mark selectable"></div>
+        <div id="m41" class="mark selectable"><span class="outline buildingCottage"></span></div>
+        <div id="m42" class="mark selectable"><span class="outline resourceBrick"></span></div>
+        <div id="m43" class="mark selectable"><span class="outline resourceBrick"></span></div>
         <div id="m44" class="mark selectable"></div>
     </div>
 

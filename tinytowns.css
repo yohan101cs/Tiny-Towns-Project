@@ -55,6 +55,7 @@
 }
 
 
+
 .resourceCards {
   grid-area: resourceCards;
   display: grid;
@@ -81,6 +82,7 @@
   height: 280px;
 
 }
+
 
 .randomResource{
   margin-left:1600px;
@@ -255,6 +257,109 @@ span.buildingCathedralOfCaterina::after {
   content: "\2302";
   font-size: 50px;
 }
+.resource-grid {
+  display: flex; /* or grid */
+  gap: 5px; /* Ensure spacing */
+  flex-wrap: wrap; /* Allow wrapping */
+}
+
+.location .resourceWheat {
+  width: 20px;  /* Smaller size */
+  height: 20px;
+  transform: scale(0.1); /* Alternative: Scale down */
+}
+
+.location .resourceBrick {
+  width: 20px;  /* Smaller size */
+  height: 20px;
+  transform: scale(0.1); /* Alternative: Scale down */
+}
+
+.location .resourceGlass {
+  width: 20px;  /* Smaller size */
+  height: 20px;
+  transform: scale(0.1); /* Alternative: Scale down */
+}
+
+.location .resourceStone {
+  width: 20px;  /* Smaller size */
+  height: 20px;
+  transform: scale(0.1); /* Alternative: Scale down */
+}
+
+.location .resourceWood {
+  width: 20px;  /* Smaller size */
+  height: 20px;
+  transform: scale(0.1); /* Alternative: Scale down */
+}
+
+.empty {
+  width: 30px;
+  height: 30px;
+  background-color: transparent; /* Keeps the empty space */
+}
+
+.location .resourcesCottage {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Three equal columns */
+  grid-template-rows: repeat(2, auto); /* Two rows */
+  gap: 5px; /* Space between elements */
+  width: fit-content;
+}  
+
+.location .resourcesChapel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+  grid-template-rows: repeat(2, auto); /* Two rows */
+  gap: 5px; /* Space between elements */
+  width: fit-content;
+} 
 
 
- 
+.location .resourcesFarm {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Three equal columns */
+  grid-template-rows: repeat(2, auto); /* Two rows */
+  gap: 5px; /* Space between elements */
+  width: fit-content;
+} 
+
+.location .resourcesTavern {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+  grid-template-rows: repeat(1, auto); /* Two rows */
+  gap: 5px; /* Space between elements */
+  width: fit-content;
+} 
+
+.location .resourcesWell {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+  grid-template-rows: repeat(1, auto); /* Two rows */
+  gap: 5px; /* Space between elements */
+  width: fit-content;
+} 
+
+.location .resourcesTheater {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+  grid-template-rows: repeat(1, auto); /* Two rows */
+  gap: 5px; /* Space between elements */
+  width: fit-content;
+} 
+
+.location .resourcesFactory {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Three equal columns */
+  grid-template-rows: repeat(2, auto); /* Two rows */
+  gap: 5px; /* Space between elements */
+  width: fit-content;
+} 
+
+.location .resourcesCathedral{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Three equal columns */
+  grid-template-rows: repeat(2, auto); /* Two rows */
+  gap: 5px; /* Space between elements */
+  width: fit-content;
+} 
