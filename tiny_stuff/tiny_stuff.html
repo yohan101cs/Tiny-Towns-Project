@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tiny Towns – Base Cards</title>
+  <link rel="stylesheet" href="tiny_stuff.css" />
+  <script src="tiny_stuff.js" defer></script>
+
+</head>
+<body>
+    <div class="card_deck"> 
+        <div class="cards-container">
+            <!-- Card 1: Farm (Farm Category) -->
+            <div class="card">
+            <div class="card-header">
+                <span class="card-title">Farm</span>
+                <span class="card-icon">🚜</span>
+            </div>
+            <div class="card-image farm"></div>
+            <div class="card-body">
+                <div class="card-pattern">
+                <div class="pattern-square green"></div>
+                <div class="pattern-square yellow"></div>
+                <div class="pattern-square green"></div>
+                </div>
+                <div class="card-effect">
+                <strong>Effect:</strong> Gain 1 point for each adjacent resource that matches the required pattern.
+                </div>
+            </div>
+            </div>
+            
+            <!-- Card 2: Well (Well Category) -->
+            <div class="card">
+            <div class="card-header">
+                <span class="card-title">Well</span>
+                <span class="card-icon">💧</span>
+            </div>
+            <div class="card-image well"></div>
+            <div class="card-body">
+                <div class="card-pattern">
+                <div class="pattern-square blue"></div>
+                <div class="pattern-square grey"></div>
+                <div class="pattern-square blue"></div>
+                </div>
+                <div class="card-effect">
+                <strong>Effect:</strong> Gain 1 point for every water resource in the same column as this card.
+                </div>
+            </div>
+            </div>
+            
+            <!-- Card 3: Theater (Theater Category) -->
+            <div class="card">
+            <div class="card-header">
+                <span class="card-title">Theater</span>
+                <span class="card-icon">🎭</span>
+            </div>
+            <div class="card-image theater"></div>
+            <div class="card-body">
+                <div class="card-pattern">
+                <div class="pattern-square brown"></div>
+                <div class="pattern-square grey"></div>
+                <div class="pattern-square brown"></div>
+                </div>
+                <div class="card-effect">
+                <strong>Effect:</strong> Gain 1 point for each unique building in the same row and column.
+                </div>
+            </div>
+            </div>
+            
+            <!-- Card 4: Tavern (Tavern Category) -->
+            <div class="card">
+            <div class="card-header">
+                <span class="card-title">Tavern</span>
+                <span class="card-icon">🍻</span>
+            </div>
+            <div class="card-image tavern"></div>
+            <div class="card-body">
+                <div class="card-pattern">
+                <div class="pattern-square red"></div>
+                <div class="pattern-square brown"></div>
+                <div class="pattern-square red"></div>
+                </div>
+                <div class="card-effect">
+                <strong>Effect:</strong> Gain 1 point for every resource adjacent to this building.
+                </div>
+            </div>
+            </div>
+            
+            <!-- Card 5: Chapel (Chapel Category) -->
+            <div class="card">
+            <div class="card-header">
+                <span class="card-title">Chapel</span>
+                <span class="card-icon">⛪</span>
+            </div>
+            <div class="card-image chapel"></div>
+            <div class="card-body">
+                <div class="card-pattern">
+                <div class="pattern-square grey"></div>
+                <div class="pattern-square yellow"></div>
+                <div class="pattern-square grey"></div>
+                </div>
+                <div class="card-effect">
+                <strong>Effect:</strong> Gain 1 point for each building in the same row.
+                </div>
+            </div>
+            </div>
+            
+            <!-- Card 6: Factory (Factory Category) -->
+            <div class="card">
+            <div class="card-header">
+                <span class="card-title">Factory</span>
+                <span class="card-icon">🏭</span>
+            </div>
+            <div class="card-image factory"></div>
+            <div class="card-body">
+                <div class="card-pattern">
+                <div class="pattern-square brown"></div>
+                <div class="pattern-square grey"></div>
+                <div class="pattern-square brown"></div>
+                </div>
+                <div class="card-effect">
+                <strong>Effect:</strong> Gain 1 point for each different resource adjacent to this card.
+                </div>
+            </div>
+            </div>
+            
+            <!-- Card 7: Millstone (Millstone Category) -->
+            <div class="card">
+            <div class="card-header">
+                <span class="card-title">Millstone</span>
+                <span class="card-icon">🌀</span>
+            </div>
+            <div class="card-image millstone"></div>
+            <div class="card-body">
+                <div class="card-pattern">
+                <div class="pattern-square yellow"></div>
+                <div class="pattern-square brown"></div>
+                <div class="pattern-square yellow"></div>
+                </div>
+                <div class="card-effect">
+                <strong>Effect:</strong> Gain 1 point for each pair of matching resources in its row or column.
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+   
+
+    <div class="grid-container">
+        <div class="grid">
+          <!-- Create 16 grid cells -->
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+      </div>
+
+      <div class="resource-cards-container">
+        <div class="resource-card wood" data-resource="wood">
+          <div class="resource-icon">🌲</div>
+          <div class="resource-label">Wood</div>
+        </div>
+        <div class="resource-card brick" data-resource="brick">
+          <div class="resource-icon">🧱</div>
+          <div class="resource-label">Brick</div>
+        </div>
+        <div class="resource-card stone" data-resource="stone">
+          <div class="resource-icon">🪨</div>
+          <div class="resource-label">Stone</div>
+        </div>
+        <div class="resource-card wheat" data-resource="wheat">
+          <div class="resource-icon">🌾</div>
+          <div class="resource-label">Wheat</div>
+        </div>
+      </div>
+</body>
+</html>

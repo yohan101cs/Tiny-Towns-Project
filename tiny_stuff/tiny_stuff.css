@@ -1,0 +1,220 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    background: #d3bfa1 url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+    padding: 20px;
+  }
+  
+  /* Cards Container */
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* Card Styles */
+  .card {
+    width: 300px;
+    background-color: #fff;
+    border: 7px solid black;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Card Header */
+  .card-header {
+    background-color: #f7f0e3;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .card-title {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  .card-icon {
+    font-size: 1.5em;
+  }
+  
+  /* Card Image (Placeholder Artwork) */
+  .card-image {
+    width: 100%;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+  }
+  .card-image.farm {
+    background-image: url('https://via.placeholder.com/300x150/8FBC8F/fff?text=Farm+Art');
+  }
+  .card-image.well {
+    background-image: url('https://via.placeholder.com/300x150/87CEFA/fff?text=Well+Art');
+  }
+  .card-image.theater {
+    background-image: url('https://via.placeholder.com/300x150/FFB6C1/fff?text=Theater+Art');
+  }
+  .card-image.tavern {
+    background-image: url('https://via.placeholder.com/300x150/FFA07A/fff?text=Tavern+Art');
+  }
+  .card-image.chapel {
+    background-image: url('https://via.placeholder.com/300x150/D3D3D3/fff?text=Chapel+Art');
+  }
+  .card-image.factory {
+    background-image: url('https://via.placeholder.com/300x150/A9A9A9/fff?text=Factory+Art');
+  }
+  .card-image.millstone {
+    background-image: url('https://via.placeholder.com/300x150/FFD700/fff?text=Millstone+Art');
+  }
+  
+  /* Card Body */
+  .card-body {
+    padding: 15px;
+  }
+  
+  /* Resource Pattern */
+  .card-pattern {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+  .pattern-square {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+  }
+  
+  /* Colors for Resource Squares */
+  .green  { background-color: #8FBC8F; }
+  .yellow { background-color: #FFD700; }
+  .brown  { background-color: #A0522D; }
+  .grey   { background-color: #808080; }
+  .blue   { background-color: #87CEFA; }
+  .red    { background-color: #B22222; }
+  
+  /* Card Effect Text */
+  .card-effect {
+    font-size: 0.9em;
+    line-height: 1.4;
+  }
+  .card-effect strong {
+    font-weight: bold;
+  }
+
+  /* Grid Container */
+  .grid-container {
+    margin: 30px 17.3% ; /* Centers horizontally */
+    max-width: max-content;
+    text-align: center; /* Optional: centers the heading and inner content */
+  }
+  
+  .grid-container h2 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.2em;
+    text-align: left;
+  }
+  
+  /* 4x4 Grid Styles */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 250px);
+    grid-template-rows: repeat(4, 250px);
+    gap: 10px;
+  }
+  .grid-cell {
+    font-size: 10%;
+    border-radius: 15px;
+    width: 250px;
+    height: 250px;
+    background-color: beige;
+    border-color: #808080;
+    border: 7px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    box-shadow: 0 1px 3px (20, 9, 9, 0.1);
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .grid-cell:hover {
+    background-color: #e0e0e0;
+  }
+  
+
+  /* Container for the resource cards */
+.resource-cards-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin: -25% 17% -10% 0;
+  }
+  
+  /* Individual Resource Card Styles */
+  .resource-card {
+    width: 250px;
+    height: 400px;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+ 
+    
+
+  .resource-card:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Active Resource Card Outline */
+.resource-card.active {
+    outline: 3px solid #000;
+  }
+  
+  /* Resource Icon and Label */
+  .resource-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+  }
+  .resource-label {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  /* Resource block styles for grid placement */
+  .wood-block {
+    background-color: #8B5A2B;
+    width: 100%;
+    height: 100%;
+  }
+  .brick-block {
+    background-color: #B22222;
+    width: 100%;
+    height: 100%;
+  }
+  .stone-block {
+    background-color: #708090;
+    width: 100%;
+    height: 100%;
+  }
+  .wheat-block {
+    background-color: #DAA520;
+    width: 100%;
+    height: 100%;
+  }
+  
