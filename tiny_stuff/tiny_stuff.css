@@ -88,7 +88,7 @@
   .pattern-square {
     width: 30px;
     height: 30px;
-    border: 1px solid #333;
+    border: 2px solid #333;
   }
   
   /* Colors for Resource Squares */
@@ -165,7 +165,7 @@
     width: 220px;
     height: 350px;
     background-color: rgba(234, 234, 234, 0.795);
-    border: 2px solid #ddd;
+    border: 5px solid black;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -195,18 +195,24 @@
     text-align:center;
     background-color:tan;
     border-radius: 15px 15px 0 0;
+    border: 5px solid black;
     width: 220px;
     height: 70px;
     margin-top: -120px;
     margin-bottom: 40px;
     padding-top: 20px;
-    font-size: 1.2em;
-    font-weight: bold;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.5em;
+    font-weight: bolder;
   }
   
   /* Resource block styles for grid placement */
   /* WOOD */
   /* ######################################## */
+.resource-icon {
+  border: 5px solid black;
+}
+
   .resource-icon.wood {
     background-color: #8B5A2B;
     width: 55%;
