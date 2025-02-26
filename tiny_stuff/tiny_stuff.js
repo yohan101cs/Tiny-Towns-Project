@@ -1,42 +1,31 @@
-// // Global variable to hold the selected resource type
-// let selectedResource = null;
-
-// // When a resource card is clicked, set the selected resource.
-// document.querySelectorAll('.resource-card').forEach(card => {
-//   card.addEventListener('click', () => {
-//     // Remove active state from all resource cards
-//     document.querySelectorAll('.resource-card').forEach(c => c.classList.remove('active'));
-//     // Add active state to the clicked card
-//     card.classList.add('active');
-//     // Set selected resource from the data attribute
-//     selectedResource = card.dataset.resource;
-//   });
-// });
-
-// // When a grid cell is clicked, place the resource if one is selected.
-// document.querySelectorAll('.grid-cell').forEach(cell => {
-//   cell.addEventListener('click', () => {
-//     // Only place resource if one is selected and the cell is empty.
-//     if (selectedResource && !cell.querySelector(`.${selectedResource}-block`)) {
-//       const resourceDiv = document.createElement('div');
-//       resourceDiv.classList.add(`${selectedResource}-block`);
-//       cell.appendChild(resourceDiv);
-      
-//       // Clear the selected resource after placement (optional)
-//       selectedResource = null;
-//       document.querySelectorAll('.resource-card').forEach(c => c.classList.remove('active'));
-//     }
-//   });
-// });
-
-
 document.addEventListener("DOMContentLoaded", function () {
+  let selectedResource = null;
+
+  // Select all resource cards
   const resourceCards = document.querySelectorAll(".resource-card");
 
+  // Select/deselect a resource
   resourceCards.forEach(card => {
       card.addEventListener("click", function () {
-          // Toggle the 'selected' class on the clicked card
-          this.classList.toggle("selected");
+          // Deselect previous selection
+          resourceCards.forEach(c => c.classList.remove("selected"));
+
+          // Select this card
+          this.classList.add("selected");
+          selectedResource = this.getAttribute("data-resource"); // Store resource type
+      });
+  });
+
+  // Place selected resource into a grid cell
+  document.querySelectorAll(".grid-cell").forEach(cell => {
+      cell.addEventListener("click", function () {
+          if (selectedResource && !this.hasChildNodes()) {
+              const newResource = document.createElement("div");
+              newResource.classList.add("resource-icon", selectedResource);
+              this.appendChild(newResource);
+          }
       });
   });
 });
+
+
