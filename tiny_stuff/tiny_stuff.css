@@ -217,4 +217,12 @@
     width: 100%;
     height: 100%;
   }
+  .glass-block {
+    background-color:#87CEFA;
+    width: 100%;
+    height: 100%;
+  }
   
+  .resource-card.selected {
+    border: 7px solid red;
+}
