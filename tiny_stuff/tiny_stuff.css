@@ -276,3 +276,6 @@
     height: 100%;
   }
   
+  .resource-card.selected {
+    border: 7px solid red;
+}
