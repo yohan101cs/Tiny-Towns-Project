@@ -1,129 +1,111 @@
+let selectedResource = null;
+let deck = createShuffledDeck(); // 🔥 Now global, accessible in all functions
+
 document.addEventListener("DOMContentLoaded", function () {
-  let selectedResource = null;
+    console.log(deck);
+    console.log(deck.length);
 
-  let deck = createShuffledDeck();
-  console.log(deck);
-  console.log(deck.length);
+    createMarket(deck); // Show initial market cards
+    console.log(deck.length);
 
-  createMarket(deck); // Show initial market cards
-  console.log(deck.length);
-
-
-  // Select all resource cards
-  const resourceCards = document.querySelectorAll(".resource-card");
-
-  // Select/deselect a resource
-  resourceCards.forEach(card => {
-      card.addEventListener("click", function () {
-          // Deselect previous selection
-          resourceCards.forEach(c => c.classList.remove("selected"));
-
-          // Select this card
-          this.classList.add("selected");
-          console.log(selectedResource);
-
-          selectedResource = this.getAttribute("data-resource"); // Store resource type
-          console.log(selectedResource);
-          console.log("happening")
-
-
-      });
-  });
-
-//   // Place selected resource into a grid cell
-document.querySelectorAll(".grid-cell").forEach(cell => {
-    cell.addEventListener("click", function () {
-        console.log(selectedResource);
-        console.log(this.hasChildNodes());
-
-        if (selectedResource && !this.hasChildNodes()) {
-            const newResource = document.createElement("div");
-            newResource.classList.add("resource-icon", selectedResource);
-            this.appendChild(newResource);
-            console.log("Selected resource after placement:", selectedResource);
-
-            marketRefresh(selectedResource, deck);
-
-            // 🔥 Reset selectedResource and remove highlight from all cards
-            selectedResource = null;
-            document.querySelectorAll(".resource-card").forEach(card => {
-                card.classList.remove("selected");
-            });
-
-            console.log("Selected resource after placement:", selectedResource);
-
-            console.log("Updated deck size:", deck.length);
-        }
-    });
+    attachGridListeners(); // Attach grid listeners
 });
-
-});
-
 
 function createShuffledDeck() {
-  let resources = ["wood", "stone", "brick", "wheat", "glass"];
-  let deck = [];
+    let resources = ["wood", "stone", "brick", "wheat", "glass"];
+    let deck = [];
 
-  resources.forEach(resource => {
-      for (let i = 0; i < 3; i++) {
-          deck.push(resource);
-      }
-  });
+    resources.forEach(resource => {
+        for (let i = 0; i < 3; i++) {
+            deck.push(resource);
+        }
+    });
 
-  for (let i = deck.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      [deck[i], deck[j]] = [deck[j], deck[i]];
-  }
+    for (let i = deck.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
 
-  return deck;
+    return deck;
 }
-
 
 function createMarket(deck) {
     const marketContainer = document.querySelector(".market");
     marketContainer.innerHTML = ""; // Clear previous market
-  
-    for (let i = 0; i < 3; i++) {
-      let resource = deck.shift(); // Take from the top of the deck
-  
-      let card = document.createElement("div");
-      card.classList.add("resource-card", resource);
-      card.setAttribute("data-resource", resource);
-  
-      let label = document.createElement("div");
-      label.classList.add("resource-label");
-      label.textContent = resource.charAt(0).toUpperCase() + resource.slice(1);
-  
-      let icon = document.createElement("div");
-      icon.classList.add("resource-icon", resource);
-  
-      card.appendChild(label);
-      card.appendChild(icon);
-      marketContainer.appendChild(card);
-    }
-  
-    attachMarketListeners(); // 🔥 Ensure new cards get event listeners
-  }
 
+    for (let i = 0; i < 3; i++) {
+        let resource = deck.shift(); // Take from the top of the deck
+
+        let card = document.createElement("div");
+        card.classList.add("resource-card", resource);
+        card.setAttribute("data-resource", resource);
+
+        let label = document.createElement("div");
+        label.classList.add("resource-label");
+        label.textContent = resource.charAt(0).toUpperCase() + resource.slice(1);
+
+        let icon = document.createElement("div");
+        icon.classList.add("resource-icon", resource);
+
+        card.appendChild(label);
+        card.appendChild(icon);
+        marketContainer.appendChild(card);
+    }
+
+    attachMarketListeners(); // Ensure new cards get event listeners
+}
 
 function attachMarketListeners() {
     const resourceCards = document.querySelectorAll(".resource-card");
 
+    // Remove existing click event listeners before adding new ones
     resourceCards.forEach(card => {
-        card.addEventListener("click", function () {
-            // Deselect all other cards
-            resourceCards.forEach(c => c.classList.remove("selected"));
+        card.replaceWith(card.cloneNode(true)); // Clone to remove event listeners
+    });
 
-            // Select the clicked card and update `selectedResource`
-            this.classList.add("selected");
-            selectedResource = this.getAttribute("data-resource"); 
-            console.log("Selected resource:", selectedResource);
+    document.querySelectorAll(".resource-card").forEach(card => {
+        card.addEventListener("click", function () {
+            if (this.classList.contains("selected")) {
+                this.classList.remove("selected");
+                selectedResource = null;
+                console.log("Deselected resource.");
+            } else {
+                document.querySelectorAll(".resource-card").forEach(c => c.classList.remove("selected"));
+                this.classList.add("selected");
+                selectedResource = this.getAttribute("data-resource");
+                console.log("Selected resource:", selectedResource);
+            }
         });
     });
 }
 
+function attachGridListeners() {
+    document.querySelectorAll(".grid-cell").forEach(cell => {
+        cell.addEventListener("click", function () {
+            console.log("Clicked cell - Selected Resource:", selectedResource);
+            console.log("Cell has child:", this.hasChildNodes());
 
-function marketRefresh(placedResource, deck) {
+            if (selectedResource && !this.hasChildNodes()) {
+                const newResource = document.createElement("div");
+                newResource.classList.add("resource-icon", selectedResource);
+                this.appendChild(newResource);
+                console.log("Placed resource:", selectedResource);
+
+                marketRefresh(selectedResource); // 🔥 Now works because deck is global
+
+                // Reset selectedResource and remove highlight from all cards
+                selectedResource = null;
+                document.querySelectorAll(".resource-card").forEach(card => {
+                    card.classList.remove("selected");
+                });
+
+                console.log("Updated deck size:", deck.length);
+            }
+        });
+    });
+}
+
+function marketRefresh(placedResource) {
     const marketContainer = document.querySelector(".market");
 
     // Find and remove the placed resource card from the market
@@ -137,7 +119,7 @@ function marketRefresh(placedResource, deck) {
     }
 
     // Move the placed resource to the bottom of the deck
-    deck.push(placedResource);
+    deck.push(placedResource); // 🔥 Now modifies global deck
 
     // Add a new resource from the deck if available
     if (deck.length > 0) {
@@ -159,8 +141,9 @@ function marketRefresh(placedResource, deck) {
         marketContainer.appendChild(newCard);
     }
 
-    attachMarketListeners(); // 🔥 Reattach listeners to ensure new cards are clickable
+    setTimeout(attachMarketListeners, 0); // 🔥 Ensure event listeners are attached after DOM updates
 }
+
 
 
 
