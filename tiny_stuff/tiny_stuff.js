@@ -1,14 +1,14 @@
 let selectedResource = null;
-let deck = createShuffledDeck(); // 🔥 Now global, accessible in all functions
+let deck = createShuffledDeck(); // deck is now a global variable so everything can use it
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log(deck);
     console.log(deck.length);
 
-    createMarket(deck); // Show initial market cards
+    createMarket(deck); 
     console.log(deck.length);
 
-    attachGridListeners(); // Attach grid listeners
+    attachGridListeners(); 
 });
 
 function createShuffledDeck() {
@@ -33,6 +33,8 @@ function createMarket(deck) {
     const marketContainer = document.querySelector(".market");
     marketContainer.innerHTML = ""; // Clear previous market
 
+
+    //loops 3 times to add 3 resource cards to the market
     for (let i = 0; i < 3; i++) {
         let resource = deck.shift(); // Take from the top of the deck
 
@@ -91,7 +93,7 @@ function attachGridListeners() {
                 this.appendChild(newResource);
                 console.log("Placed resource:", selectedResource);
 
-                marketRefresh(selectedResource); // 🔥 Now works because deck is global
+                marketRefresh(selectedResource);
 
                 // Reset selectedResource and remove highlight from all cards
                 selectedResource = null;
@@ -141,7 +143,7 @@ function marketRefresh(placedResource) {
         marketContainer.appendChild(newCard);
     }
 
-    setTimeout(attachMarketListeners, 0); // 🔥 Ensure event listeners are attached after DOM updates
+    setTimeout(attachMarketListeners, 0); // Ensure event listeners are attached after DOM updates
 }
 
 
