@@ -3,11 +3,13 @@ let deck = createShuffledDeck();
 let selectedCells = new Set();
 let selectedBuilding = null;
 
+
 document.addEventListener("DOMContentLoaded", function () {
     createMarket(deck);
     attachGridListeners();
     attachBuildingListeners();
 });
+
 
 function createShuffledDeck() {
     let resources = ["wood", "stone", "brick", "wheat", "glass"];
@@ -26,6 +28,7 @@ function createShuffledDeck() {
 
     return deck;
 }
+
 
 function createMarket(deck) {
     const marketContainer = document.querySelector(".market");
@@ -53,6 +56,7 @@ function createMarket(deck) {
     attachMarketListeners();
 }
 
+
 function attachMarketListeners() {
     const resourceCards = document.querySelectorAll(".resource-card");
 
@@ -61,6 +65,7 @@ function attachMarketListeners() {
         card.addEventListener("click", handleResourceClick);
     });
 }
+
 
 function handleResourceClick() {
     if (document.querySelectorAll(".grid-cell.selected").length > 0) {
@@ -84,6 +89,19 @@ function handleResourceClick() {
 function attachGridListeners() {
     document.querySelectorAll(".grid-cell").forEach(cell => {
         cell.addEventListener("click", function () {
+            if (selectedBuilding === "Farm") {
+                if (selectedCells.has(this)) {
+                    // Place the farm icon in the clicked cell
+                    placeFarm(this);
+                    selectedBuilding = null; // Reset selected building
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Farm.");
+                    return;
+                }
+            }
+
             if (selectedResource) {
                 // Place the resource immediately
                 if (!this.hasChildNodes()) {
@@ -93,11 +111,7 @@ function attachGridListeners() {
                     this.appendChild(newResource);
                     console.log("Placed resource:", selectedResource);
 
-
-                    //check to see if farm is able to be built
-                    console.log("placedResource")
-                    checkFarmPlacement(); // Call it directly after placing a resource
-
+                    checkFarmPlacement(); // Check for farm after placement
                     marketRefresh(selectedResource); // Refresh market
 
                     // Clear selected resource after placement
@@ -105,7 +119,7 @@ function attachGridListeners() {
                     document.querySelectorAll(".resource-card").forEach(c => c.classList.remove("selected"));
                 }
             } else {
-                // Toggle grid selection (only if no resource is selected)
+                // Toggle grid selection if no resource is selected
                 if (selectedCells.has(this)) {
                     selectedCells.delete(this);
                     this.classList.remove("selected");
@@ -119,6 +133,8 @@ function attachGridListeners() {
         });
     });
 }
+
+
 
 function marketRefresh(placedResource) {
     const marketContainer = document.querySelector(".market");
@@ -154,6 +170,7 @@ function marketRefresh(placedResource) {
 
     attachMarketListeners();
 }
+
 
 function attachBuildingListeners() {
     const buildingCards = document.querySelectorAll(".cards-container .card");
@@ -191,8 +208,6 @@ function handleBuildingClick() {
         console.log("Selected building:", selectedBuilding);
     }
 }
-
-
 
 
 function areCorrectGridsSelected(buildingName) {
@@ -312,10 +327,40 @@ function checkFarmPlacement() {
     }
 }
 
+
 function getResourceAt(row, col) {
     const cell = document.querySelector(`.grid-cell[data-row="${row}"][data-col="${col}"]`);
     if (cell && cell.firstChild) {
         return cell.firstChild.getAttribute("data-resource");
     }
     return null;
+}
+
+
+function placeFarm(targetCell) {
+    if (!selectedCells.has(targetCell)) {
+        console.log("You must place the farm in a selected tile.");
+        return;
+    }
+
+    // Clear resources from selected tiles
+    selectedCells.forEach(cell => {
+        while (cell.firstChild) {
+            cell.removeChild(cell.firstChild);
+        }
+    });
+
+    // Create the farm icon element
+    const farmIcon = document.createElement("div");
+    farmIcon.classList.add("building-icon", "farm");
+    farmIcon.innerHTML = "🚜"; // Add farm emoji or image
+
+    // Place the farm icon in the clicked tile
+    targetCell.appendChild(farmIcon);
+
+    console.log("Farm placed successfully in the selected tile!");
+
+    // Clear selection highlights and reset selectedCells
+    selectedCells.forEach(cell => cell.classList.remove("selected"));
+    selectedCells.clear();
 }
