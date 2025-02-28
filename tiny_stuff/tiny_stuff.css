@@ -289,3 +289,14 @@
   outline: 3px solid yellow;  /* Highlight selection */
   background-color: rgba(255, 255, 0, 0.3); /* Light yellow background */
 }
+
+/*if building is available for selection*/
+.card.selectable {
+  border: 2px solid green;
+  cursor: pointer;
+}
+
+.card.selected {
+  outline: 3px solid yellow;  /* Highlight selection */
+  background-color: rgba(255, 255, 0, 0.3); /* Light yellow background */
+}

@@ -1,10 +1,12 @@
 let selectedResource = null;
 let deck = createShuffledDeck();
 let selectedCells = new Set();
+let selectedBuilding = null;
 
 document.addEventListener("DOMContentLoaded", function () {
     createMarket(deck);
     attachGridListeners();
+    attachBuildingListeners();
 });
 
 function createShuffledDeck() {
@@ -146,4 +148,26 @@ function marketRefresh(placedResource) {
     }
 
     attachMarketListeners();
+}
+
+function attachBuildingListeners() {
+    const buildingCards = document.querySelectorAll(".cards-container .card");
+
+    buildingCards.forEach(card => {
+        card.removeEventListener("click", handleBuildingClick); // Prevent duplicate listeners
+        card.addEventListener("click", handleBuildingClick);
+    });
+}
+
+function handleBuildingClick() {
+    if (this.classList.contains("selected")) {
+        this.classList.remove("selected");
+        selectedBuilding = null;
+        console.log("Deselected building.");
+    } else {
+        document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+        this.classList.add("selected");
+        selectedBuilding = this.querySelector(".card-title").textContent.trim();
+        console.log("Selected building:", selectedBuilding);
+    }
 }
