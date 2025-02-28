@@ -90,15 +90,14 @@ function attachGridListeners() {
     document.querySelectorAll(".grid-cell").forEach(cell => {
         cell.addEventListener("click", function () {
             if (selectedBuilding === "Farm") {
-                // Check if selected cells form a valid farm placement
-                if (areCorrectGridsSelected("Farm")) {
-                    // Replace selected tiles with a farm
-                    placeFarm();
+                if (selectedCells.has(this)) {
+                    // Place the farm icon in the clicked cell
+                    placeFarm(this);
                     selectedBuilding = null; // Reset selected building
                     document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
                     return;
                 } else {
-                    console.log("Invalid farm placement.");
+                    console.log("Click on a selected tile to place the Farm.");
                     return;
                 }
             }
@@ -134,6 +133,7 @@ function attachGridListeners() {
         });
     });
 }
+
 
 
 function marketRefresh(placedResource) {
@@ -319,17 +319,14 @@ function getResourceAt(row, col) {
 }
 
 
-function placeFarm() {
-    if (selectedCells.size !== 4) {
-        console.log("Farm requires exactly 4 selected tiles.");
+function placeFarm(targetCell) {
+    if (!selectedCells.has(targetCell)) {
+        console.log("You must place the farm in a selected tile.");
         return;
     }
 
-    // Convert Set to Array for easy access
-    const selectedArray = Array.from(selectedCells);
-
-    // Clear selected tiles (remove any previous resources)
-    selectedArray.forEach(cell => {
+    // Clear resources from selected tiles
+    selectedCells.forEach(cell => {
         while (cell.firstChild) {
             cell.removeChild(cell.firstChild);
         }
@@ -338,12 +335,12 @@ function placeFarm() {
     // Create the farm icon element
     const farmIcon = document.createElement("div");
     farmIcon.classList.add("building-icon", "farm");
-    farmIcon.innerHTML = "🚜"; // Add the farm emoji or use an image if preferred
+    farmIcon.innerHTML = "🚜"; // Add farm emoji or image
 
-    // Place the farm icon in one of the selected tiles (e.g., the top-left one)
-    selectedArray[0].appendChild(farmIcon);
+    // Place the farm icon in the clicked tile
+    targetCell.appendChild(farmIcon);
 
-    console.log("Farm placed successfully!");
+    console.log("Farm placed successfully in the selected tile!");
 
     // Clear selection highlights and reset selectedCells
     selectedCells.forEach(cell => cell.classList.remove("selected"));
