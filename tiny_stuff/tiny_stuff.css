@@ -291,9 +291,8 @@
 }
 
 /*if building is available for selection*/
-.card.selectable {
-  border: 2px solid green;
-  cursor: pointer;
+.card.readyToBuild {
+  border: 10px solid green;  /* Highlight selection */
 }
 
 .card.selected {
