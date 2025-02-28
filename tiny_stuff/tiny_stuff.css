@@ -270,13 +270,13 @@
   /* GLASS */
   /* ######################################### */
   .resource-icon.glass {
-    background-color: white;
+    background-color: #87CEFA;
     width: 55%;
     height: 40%;
   }
 
   .glass-block {
-    background-color: white;
+    background-color: #87CEFA;
     width: 100%;
     height: 100%;
   }

@@ -196,6 +196,7 @@ function handleBuildingClick() {
 
 
 function areCorrectGridsSelected(buildingName) {
+  //farm Selection ---------------------------//
     if (buildingName === "Farm") {
         const selectedArray = Array.from(selectedCells);
         if (selectedArray.length !== 4) {
@@ -215,7 +216,24 @@ function areCorrectGridsSelected(buildingName) {
     }
 
     // Add more buildings here
+    //Cottage Selection ------------------------------------//
+    if (buildingName === "Cottage") {
+      const selectedArray = Array.from(selectedCells);
+      if (selectedArray.length !== 3) {
+          console.log("Cottage requires exactly 3 selected tiles.");
+          return false;
+      }
 
+      let resources = selectedArray.map(cell => cell.firstChild ? cell.firstChild.getAttribute("data-resource") : null);
+      resources.sort(); // Sort to make comparison easier
+
+      const validFarmCombinations = [
+          ["wheat", "brick", "glass"], 
+          ["glass", "brick", "wheat"]
+      ];
+
+      return validFarmCombinations.some(combination => JSON.stringify(combination) === JSON.stringify(resources));
+  }
     return false;
 }
 
