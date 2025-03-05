@@ -355,6 +355,9 @@ function placeFarm(targetCell) {
     farmIcon.classList.add("building-icon", "farm");
     farmIcon.innerHTML = "🚜"; // Add farm emoji or image
 
+    targetCell.appendChild(farmIcon);
+    
+
     // Place the farm icon in the clicked tile
     targetCell.appendChild(farmIcon);
 

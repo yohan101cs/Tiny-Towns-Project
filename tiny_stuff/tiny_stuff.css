@@ -304,3 +304,12 @@
   opacity: 0.2; /* Dim the elements */
   cursor: not-allowed;
 }
+
+.card-icon, .building-icon {
+  font-size: 5rem; /* Increase the icon size */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
