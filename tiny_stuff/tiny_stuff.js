@@ -92,13 +92,31 @@ function attachGridListeners() {
             if (selectedBuilding === "Farm") {
                 if (selectedCells.has(this)) {
                     // Place the farm icon in the clicked cell
-                    // placeFarm(this);
                     placeBuilding(this,selectedBuilding);
                     selectedBuilding = null; // Reset selected building
                     document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
                     return;
                 } else {
                     console.log("Click on a selected tile to place the Farm.");
+                    return;
+                }
+            }
+            
+            if (selectedBuilding === "Well") {
+                if (selectedCells.has(this)) {
+                    // If the cell is already selected, place the Well icon in the clicked cell
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null; // Reset selected building
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    return;
+                } else if (selectedCells.size === 1) {
+                    // If this is the second tile clicked, place the Well
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null; // Reset selected building
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Well.");
                     return;
                 }
             }
@@ -113,6 +131,7 @@ function attachGridListeners() {
                     console.log("Placed resource:", selectedResource);
 
                     checkFarmPlacement(); // Check for farm after placement
+                    checkWellPlacement(); //Check for well after placement
                     marketRefresh(selectedResource); // Refresh market
 
                     // Clear selected resource after placement
@@ -232,25 +251,27 @@ function areCorrectGridsSelected(buildingName) {
     }
 
     // Add more buildings here
-    //Cottage Selection ------------------------------------//
-    if (buildingName === "Cottage") {
-      const selectedArray = Array.from(selectedCells);
-      if (selectedArray.length !== 3) {
-          console.log("Cottage requires exactly 3 selected tiles.");
-          return false;
-      }
+    if (buildingName === "Well") {
+        const selectedArray = Array.from(selectedCells);
+        if (selectedArray.length !== 2) {
+            console.log("Well requires exactly 2 selected tiles.");
+            return false;
+        }
 
-      let resources = selectedArray.map(cell => cell.firstChild ? cell.firstChild.getAttribute("data-resource") : null);
-      resources.sort(); // Sort to make comparison easier
+        let resources = selectedArray.map(cell => 
+            cell.firstChild ? cell.firstChild.getAttribute("data-resource") : null
+        );
 
-      const validFarmCombinations = [
-          ["wheat", "brick", "glass"], 
-          ["glass", "brick", "wheat"]
-      ];
+        // Valid combinations for Well: ["wood", "stone"] OR ["stone", "wood"]
+        if (resources.includes("wood") && resources.includes("stone")) {
+            return true;
+        }
 
-      return validFarmCombinations.some(combination => JSON.stringify(combination) === JSON.stringify(resources));
-  }
-    return false;
+        console.log("Invalid Well placement. Must have exactly one wood and one stone.");
+        return false;
+    }
+
+
 }
 
 
@@ -329,6 +350,71 @@ function checkFarmPlacement() {
 }
 
 
+function checkWellPlacement() {
+    console.log("Checking Well placement...");
+
+    const gridCells = document.querySelectorAll(".grid-cell");
+    const gridSize = Math.sqrt(gridCells.length); // Assuming a square grid
+
+    let foundValidPlacement = false;
+
+    for (let row = 0; row < gridSize; row++) {
+        for (let col = 0; col < gridSize; col++) {
+            const current = getResourceAt(row, col);
+            console.log(`Cell (${row}, ${col}) contains: ${current}`); // Debugging log
+
+            if (!current) continue; // Skip empty cells
+
+            // Check right neighbor (horizontal)
+            if (col < gridSize - 1) {
+                const right = getResourceAt(row, col + 1);
+                console.log(`Checking Right: ${current} - ${right}`);
+
+                if (
+                    (current === "wood" && right === "stone") ||
+                    (current === "stone" && right === "wood")
+                ) {
+                    foundValidPlacement = true;
+                }
+            }
+
+            // Check bottom neighbor (vertical)
+            if (row < gridSize - 1) {
+                const below = getResourceAt(row + 1, col);
+                console.log(`Checking Below: ${current} - ${below}`);
+
+                if (
+                    (current === "wood" && below === "stone") ||
+                    (current === "stone" && below === "wood")
+                ) {
+                    foundValidPlacement = true;
+                }
+            }
+
+            if (foundValidPlacement) break;
+        }
+        if (foundValidPlacement) break;
+    }
+
+    // Find the Well card and update its status
+    const wellCard = document.querySelector(".card[data-building='Well']");
+    console.log("Well card:", wellCard); // Debugging log
+
+    if (wellCard) {
+        if (foundValidPlacement) {
+            console.log("Well is ready to build!");
+            wellCard.classList.add("readyToBuild");
+        } else {
+            console.log("Well is NOT ready to build.");
+            wellCard.classList.remove("readyToBuild");
+        }
+    } else {
+        console.error("Well card not found in DOM.");
+    }
+}
+
+
+
 function getResourceAt(row, col) {
     const cell = document.querySelector(`.grid-cell[data-row="${row}"][data-col="${col}"]`);
     if (cell && cell.firstChild) {
@@ -336,39 +422,6 @@ function getResourceAt(row, col) {
     }
     return null;
 }
-
-
-// function placeFarm(targetCell) {
-//     if (!selectedCells.has(targetCell)) {
-//         console.log("You must place the farm in a selected tile.");
-//         return;
-//     }
-
-//     // Clear resources from selected tiles
-//     selectedCells.forEach(cell => {
-//         while (cell.firstChild) {
-//             cell.removeChild(cell.firstChild);
-//         }
-//     });
-
-//     // Create the farm icon element
-//     const farmIcon = document.createElement("div");
-//     farmIcon.classList.add("building-icon", "farm");
-//     farmIcon.innerHTML = "🚜"; // Add farm emoji or image
-
-    
-
-//     // Place the farm icon in the clicked tile
-//     targetCell.appendChild(farmIcon);
-
-//     console.log("Farm placed successfully in the selected tile!");
-
-//     // Clear selection highlights and reset selectedCells
-//     selectedCells.forEach(cell => cell.classList.remove("selected"));
-//     selectedCells.clear();
-// }
-
-
 
 
 function placeBuilding(targetCell, buildingType) {
@@ -391,8 +444,13 @@ function placeBuilding(targetCell, buildingType) {
     // Assign correct icon based on building type
     const buildingIcons = {
         "Farm": "🚜",
-        "House": "🏠",
-        "Lumber Mill": "🏭"
+        "Well": "💧",
+        "Theater": "🎭",
+        "Tavern": "🍻",
+        "Chapel": "⛪",
+        "Factory": "🏭",
+        "Cottage": "🏠"
+        //add cathedral of caterina
     };
 
     buildingIcon.innerHTML = buildingIcons[buildingType] || "❓"; // Default icon if not found
