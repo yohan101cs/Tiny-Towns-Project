@@ -92,7 +92,8 @@ function attachGridListeners() {
             if (selectedBuilding === "Farm") {
                 if (selectedCells.has(this)) {
                     // Place the farm icon in the clicked cell
-                    placeFarm(this);
+                    // placeFarm(this);
+                    placeBuilding(this,selectedBuilding);
                     selectedBuilding = null; // Reset selected building
                     document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
                     return;
@@ -337,9 +338,42 @@ function getResourceAt(row, col) {
 }
 
 
-function placeFarm(targetCell) {
+// function placeFarm(targetCell) {
+//     if (!selectedCells.has(targetCell)) {
+//         console.log("You must place the farm in a selected tile.");
+//         return;
+//     }
+
+//     // Clear resources from selected tiles
+//     selectedCells.forEach(cell => {
+//         while (cell.firstChild) {
+//             cell.removeChild(cell.firstChild);
+//         }
+//     });
+
+//     // Create the farm icon element
+//     const farmIcon = document.createElement("div");
+//     farmIcon.classList.add("building-icon", "farm");
+//     farmIcon.innerHTML = "🚜"; // Add farm emoji or image
+
+    
+
+//     // Place the farm icon in the clicked tile
+//     targetCell.appendChild(farmIcon);
+
+//     console.log("Farm placed successfully in the selected tile!");
+
+//     // Clear selection highlights and reset selectedCells
+//     selectedCells.forEach(cell => cell.classList.remove("selected"));
+//     selectedCells.clear();
+// }
+
+
+
+
+function placeBuilding(targetCell, buildingType) {
     if (!selectedCells.has(targetCell)) {
-        console.log("You must place the farm in a selected tile.");
+        console.log("You must place the building in a selected tile.");
         return;
     }
 
@@ -350,20 +384,26 @@ function placeFarm(targetCell) {
         }
     });
 
-    // Create the farm icon element
-    const farmIcon = document.createElement("div");
-    farmIcon.classList.add("building-icon", "farm");
-    farmIcon.innerHTML = "🚜"; // Add farm emoji or image
+    // Create the building icon element
+    const buildingIcon = document.createElement("div");
+    buildingIcon.classList.add("building-icon", buildingType.toLowerCase().replace(/\s/g, "-")); // Convert to lowercase and replace spaces
 
-    targetCell.appendChild(farmIcon);
-    
+    // Assign correct icon based on building type
+    const buildingIcons = {
+        "Farm": "🚜",
+        "House": "🏠",
+        "Lumber Mill": "🏭"
+    };
 
-    // Place the farm icon in the clicked tile
-    targetCell.appendChild(farmIcon);
+    buildingIcon.innerHTML = buildingIcons[buildingType] || "❓"; // Default icon if not found
 
-    console.log("Farm placed successfully in the selected tile!");
+    // Place the building icon in the clicked cell
+    targetCell.appendChild(buildingIcon);
+
+    console.log(`${buildingType} placed successfully in the selected tile!`);
 
     // Clear selection highlights and reset selectedCells
     selectedCells.forEach(cell => cell.classList.remove("selected"));
     selectedCells.clear();
 }
+
