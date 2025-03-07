@@ -121,6 +121,34 @@ function attachGridListeners() {
                 }
             }
 
+            // Add logic for placing the Cottage
+            if (selectedBuilding === "Cottage") {
+                if (selectedCells.has(this)) {
+                    // Place the farm icon in the clicked cell
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null; // Reset selected building
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Farm.");
+                    return;
+                }
+            }
+
+            if (selectedBuilding === "Tavern") {
+                if (selectedCells.has(this)) {
+                    // Place the farm icon in the clicked cell
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null; // Reset selected building
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Farm.");
+                    return;
+                }
+            }
+            
+
             if (selectedResource) {
                 // Place the resource immediately
                 if (!this.hasChildNodes()) {
@@ -130,8 +158,16 @@ function attachGridListeners() {
                     this.appendChild(newResource);
                     console.log("Placed resource:", selectedResource);
 
-                    checkFarmPlacement(); // Check for farm after placement
-                    checkWellPlacement(); //Check for well after placement
+                    checkFarmPlacement(); 
+                    checkWellPlacement(); 
+                    // checkTheaterPlacement();
+                    checkTavernPlacement();
+                    // checkChapelPlacement();
+                    // checkFactoryPlacement();
+                    checkCottagePlacement();
+                    // checkCathedralOfCaterinaPlacement();
+
+                
                     marketRefresh(selectedResource); // Refresh market
 
                     // Clear selected resource after placement
@@ -230,10 +266,12 @@ function handleBuildingClick() {
 }
 
 
+
 function areCorrectGridsSelected(buildingName) {
-  //farm Selection ---------------------------//
+    const selectedArray = Array.from(selectedCells);
+
+    // Farm Selection ---------------------------//
     if (buildingName === "Farm") {
-        const selectedArray = Array.from(selectedCells);
         if (selectedArray.length !== 4) {
             console.log("Farm requires exactly 4 selected tiles.");
             return false;
@@ -247,12 +285,33 @@ function areCorrectGridsSelected(buildingName) {
             ["wood", "wood", "wheat", "wheat"]
         ];
 
-        return validFarmCombinations.some(combination => JSON.stringify(combination) === JSON.stringify(resources));
+        // Check if the resources match a valid farm pattern
+        if (!validFarmCombinations.some(combination => JSON.stringify(combination) === JSON.stringify(resources))) {
+            console.log("Invalid Farm placement. Resources or position are incorrect.");
+            return false;
+        }
+
+        // Check if the selected cells are either in the same row or the same column, but not diagonally
+        const [cell1, cell2, cell3, cell4] = selectedArray;
+        const [row1, col1] = getRowAndColumn(cell1);
+        const [row2, col2] = getRowAndColumn(cell2);
+        const [row3, col3] = getRowAndColumn(cell3);
+        const [row4, col4] = getRowAndColumn(cell4);
+
+        const isSameRow = row1 === row2 && row3 === row4 && col1 !== col2 && col3 !== col4;
+        const isSameColumn = col1 === col2 && col3 === col4 && row1 !== row2 && row3 !== row4;
+
+        if (isSameRow || isSameColumn) {
+            console.log("Farm placement is valid.");
+            return true;
+        } else {
+            console.log("Invalid Farm placement. Cells are diagonally placed.");
+            return false;
+        }
     }
 
-    // Add more buildings here
+    // Well Selection ---------------------------//
     if (buildingName === "Well") {
-        const selectedArray = Array.from(selectedCells);
         if (selectedArray.length !== 2) {
             console.log("Well requires exactly 2 selected tiles.");
             return false;
@@ -262,17 +321,118 @@ function areCorrectGridsSelected(buildingName) {
             cell.firstChild ? cell.firstChild.getAttribute("data-resource") : null
         );
 
-        // Valid combinations for Well: ["wood", "stone"] OR ["stone", "wood"]
         if (resources.includes("wood") && resources.includes("stone")) {
-            return true;
+            const [cell1, cell2] = selectedArray;
+            const [row1, col1] = getRowAndColumn(cell1);
+            const [row2, col2] = getRowAndColumn(cell2);
+
+            if ((row1 === row2 && col1 !== col2) || (row1 !== row2 && col1 === col2)) {
+                console.log("Well placement is valid.");
+                return true;
+            } else {
+                console.log("Invalid Well placement. Cells are diagonally placed.");
+                return false;
+            }
         }
 
         console.log("Invalid Well placement. Must have exactly one wood and one stone.");
         return false;
     }
 
+    // Cottage Selection ---------------------------//
+    if (buildingName === "Cottage") {
+        if (selectedArray.length !== 3) {
+            console.log("Cottage requires exactly 3 selected tiles.");
+            return false;
+        }
+    
+        let resources = selectedArray.map(cell => 
+            cell.firstChild ? cell.firstChild.getAttribute("data-resource") : null
+        );
+    
+        // Check if resources match the Cottage pattern (one wheat, brick/glass, brick/glass/wheat)
+        if (resources.includes("wheat") && (resources.includes("brick") || resources.includes("glass"))) {
+            const [cell1, cell2, cell3] = selectedArray;
+            const [row1, col1] = getRowAndColumn(cell1);
+            const [row2, col2] = getRowAndColumn(cell2);
+            const [row3, col3] = getRowAndColumn(cell3);
+    
+            const topLeft = resources[0]; // Resource from the first cell
+            const topRight = resources[1]; // Resource from the second cell
+            const bottomLeft = resources[2]; // Resource from the third cell
+            const bottomRight = null; // There's no fourth cell, so set this as null
+    
+            console.log('Top Left:', topLeft);
+            console.log('Top Right:', topRight);
+            console.log('Bottom Left:', bottomLeft);
+    
+            // Check if the selected resources match any of the valid Cottage patterns
+            const isValidPattern = 
+                (topLeft === "brick" && topRight === "glass" &&
+                 bottomLeft === "wheat" && bottomRight === null) ||
 
+                 (topLeft === "wheat" && bottomLeft === "brick" &&
+                    topRight === "glass" && bottomRight === null) ||
+
+                (topLeft === "glass" && bottomLeft === "wheat" &&
+                    topRight === "brick" && bottomRight === null);
+    
+            if (isValidPattern) {
+                console.log("Cottage placement is valid.");
+                return true;
+            } else {
+                console.log("Invalid Cottage placement. Resources or orientation are incorrect.");
+                return false;
+            }
+        }
+    }
+    
+
+    // Tavern Selection ---------------------------//
+    if (buildingName === "Tavern") {
+        if (selectedArray.length !== 3) {
+            console.log("Tavern requires exactly 3 selected tiles.");
+            return false;
+        }
+
+        let resources = selectedArray.map(cell => 
+            cell.firstChild ? cell.firstChild.getAttribute("data-resource") : null
+        );
+
+        // Check if resources match the Tavern pattern (Brick, Brick, Glass in horizontal or vertical pattern)
+        if (resources.includes("brick") && resources.includes("glass")) {
+            const [cell1, cell2, cell3] = selectedArray;
+            const [row1, col1] = getRowAndColumn(cell1);
+            const [row2, col2] = getRowAndColumn(cell2);
+            const [row3, col3] = getRowAndColumn(cell3);
+    
+            // Check for horizontal (Brick, Brick, Glass)
+            const isValidHorizontal = 
+                (resources[0] === "brick" && resources[1] === "brick" && resources[2] === "glass") ||
+                (resources[0] === "glass" && resources[1] === "brick" && resources[2] === "brick");
+            
+            // Check for vertical (Brick on top, Brick in middle, Glass on bottom)
+            const isValidVertical =
+                (resources[0] === "brick" && resources[1] === "brick" && resources[2] === "glass") ||
+                (resources[0] === "glass" && resources[1] === "brick" && resources[2] === "brick");
+
+            if (isValidHorizontal || isValidVertical) {
+                console.log("Tavern placement is valid.");
+                return true;
+            } else {
+                console.log("Invalid Tavern placement. Resources or orientation are incorrect.");
+                return false;
+            }
+        }
+    }
+    
+    // Add more buildings here...
 }
+
+
+
+
+
 
 
 //if buildings have the resources to build them, then they are ready
@@ -415,6 +575,122 @@ function checkWellPlacement() {
 
 
 
+function checkCottagePlacement() {
+    const gridCells = document.querySelectorAll(".grid-cell");
+    const gridSize = Math.sqrt(gridCells.length); // Assuming a square grid
+
+    let foundValidPlacement = false;
+
+    // Loop through the grid to check for a 2x2 block
+    for (let row = 0; row < gridSize - 1; row++) {
+        for (let col = 0; col < gridSize - 1; col++) {
+            const topLeft = getResourceAt(row, col);
+            const topRight = getResourceAt(row, col + 1);
+            const bottomLeft = getResourceAt(row + 1, col);
+            const bottomRight = getResourceAt(row + 1, col + 1);
+
+            console.log(`Checking 2x2 block at (${row}, ${col}):`, { topLeft, topRight, bottomLeft, bottomRight });
+            console.log(`Top Left: ${topLeft}, Top Right: ${topRight}, Bottom Left: ${bottomLeft}, Bottom Right: ${bottomRight}`);
+
+
+            // Check for all valid Cottage placements
+            if (
+                // Original Orientation
+                (topLeft === null && topRight === "wheat" &&
+                 bottomLeft === "brick" && bottomRight === "glass") ||
+                // Flipped Up-Down
+                (topLeft === "brick" && topRight === "glass" &&
+                 bottomLeft === null && bottomRight === "wheat") ||
+                // Flipped Left-Right
+                (topLeft === "wheat" && bottomLeft === "glass" &&
+                 topRight === null && bottomRight === "brick") ||
+                // Fully Rotated (90° Counterclockwise)
+                (topLeft === "brick" && bottomLeft === "glass" &&
+                 topRight === null && bottomRight === "wheat") 
+
+
+            ) {
+                foundValidPlacement = true;
+                break;
+            }
+        }
+        if (foundValidPlacement) break;
+    }
+
+    // Update the Cottage building card based on the result
+    const cottageCard = document.querySelector(".card[data-building='Cottage']");
+    if (cottageCard) {
+        if (foundValidPlacement && !cottageCard.classList.contains("readyToBuild")) {
+            cottageCard.classList.add("readyToBuild");
+            console.log("Cottage is now ready to build.");
+        } else if (!foundValidPlacement && cottageCard.classList.contains("readyToBuild")) {
+            cottageCard.classList.remove("readyToBuild");
+            console.log("Cottage is no longer ready to build.");
+        }
+    }
+}
+
+
+
+function checkTavernPlacement() {
+    const gridCells = document.querySelectorAll(".grid-cell");
+    const gridSize = Math.sqrt(gridCells.length); // Assuming a square grid
+
+    let foundValidPlacement = false;
+
+    // Check for horizontal placement (Brick, Brick, Glass in a row)
+    for (let row = 0; row < gridSize; row++) {
+        for (let col = 0; col < gridSize - 2; col++) { // Ensure width of 3
+            const left = getResourceAt(row, col);
+            const middle = getResourceAt(row, col + 1);
+            const right = getResourceAt(row, col + 2);
+
+            if ((left === "brick" && middle === "brick" && right === "glass") ||
+                (left === "glass" && middle === "brick" && right === "brick")) {
+                foundValidPlacement = true;
+                break;
+            }
+        }
+        if (foundValidPlacement) break;
+    }
+
+    // Check for vertical placement (Brick on top, Brick in middle, Glass on bottom)
+    if (!foundValidPlacement) {
+        for (let col = 0; col < gridSize; col++) {
+            for (let row = 0; row < gridSize - 2; row++) { // Ensure height of 3
+                const top = getResourceAt(row, col);
+                const middle = getResourceAt(row + 1, col);
+                const bottom = getResourceAt(row + 2, col);
+
+                if ((top === "brick" && middle === "brick" && bottom === "glass") ||
+                    (top === "glass" && middle === "brick" && bottom === "brick")) {
+                    foundValidPlacement = true;
+                    break;
+                }
+            }
+            if (foundValidPlacement) break;
+        }
+    }
+
+    // Update the Tavern building card based on the result
+    const tavernCard = document.querySelector(".card[data-building='Tavern']");
+    if (tavernCard) {
+        if (foundValidPlacement && !tavernCard.classList.contains("readyToBuild")) {
+            tavernCard.classList.add("readyToBuild");
+            console.log("Tavern is now ready to build.");
+        } else if (!foundValidPlacement && tavernCard.classList.contains("readyToBuild")) {
+            tavernCard.classList.remove("readyToBuild");
+            console.log("Tavern is no longer ready to build.");
+        }
+    }
+}
+
+
+
+
+
+
+
 function getResourceAt(row, col) {
     const cell = document.querySelector(`.grid-cell[data-row="${row}"][data-col="${col}"]`);
     if (cell && cell.firstChild) {
@@ -464,4 +740,18 @@ function placeBuilding(targetCell, buildingType) {
     selectedCells.forEach(cell => cell.classList.remove("selected"));
     selectedCells.clear();
 }
+
+
+
+function getRowAndColumn(cell) {
+    const row = cell.getAttribute('data-row');
+    const col = cell.getAttribute('data-col');
+    return [parseInt(row), parseInt(col)];
+}
+
+
+
+
+
+
 
