@@ -134,6 +134,19 @@ function attachGridListeners() {
                     return;
                 }
             }
+
+            if (selectedBuilding === "Tavern") {
+                if (selectedCells.has(this)) {
+                    // Place the farm icon in the clicked cell
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null; // Reset selected building
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Farm.");
+                    return;
+                }
+            }
             
 
             if (selectedResource) {
@@ -148,7 +161,7 @@ function attachGridListeners() {
                     checkFarmPlacement(); 
                     checkWellPlacement(); 
                     // checkTheaterPlacement();
-                    // checkTavernPlacement();
+                    checkTavernPlacement();
                     // checkChapelPlacement();
                     // checkFactoryPlacement();
                     checkCottagePlacement();
@@ -344,12 +357,6 @@ function areCorrectGridsSelected(buildingName) {
             const [row2, col2] = getRowAndColumn(cell2);
             const [row3, col3] = getRowAndColumn(cell3);
     
-            // Assuming that the 3 cells will be placed in a 2x2 pattern, we need to check them accordingly
-            // The grid should match something like:
-            // Top-left -> wheat
-            // Top-right -> wheat
-            // Bottom-left -> brick/glass
-            // Bottom-right -> brick/glass
             const topLeft = resources[0]; // Resource from the first cell
             const topRight = resources[1]; // Resource from the second cell
             const bottomLeft = resources[2]; // Resource from the third cell
@@ -380,6 +387,44 @@ function areCorrectGridsSelected(buildingName) {
         }
     }
     
+
+    // Tavern Selection ---------------------------//
+    if (buildingName === "Tavern") {
+        if (selectedArray.length !== 3) {
+            console.log("Tavern requires exactly 3 selected tiles.");
+            return false;
+        }
+
+        let resources = selectedArray.map(cell => 
+            cell.firstChild ? cell.firstChild.getAttribute("data-resource") : null
+        );
+
+        // Check if resources match the Tavern pattern (Brick, Brick, Glass in horizontal or vertical pattern)
+        if (resources.includes("brick") && resources.includes("glass")) {
+            const [cell1, cell2, cell3] = selectedArray;
+            const [row1, col1] = getRowAndColumn(cell1);
+            const [row2, col2] = getRowAndColumn(cell2);
+            const [row3, col3] = getRowAndColumn(cell3);
+    
+            // Check for horizontal (Brick, Brick, Glass)
+            const isValidHorizontal = 
+                (resources[0] === "brick" && resources[1] === "brick" && resources[2] === "glass") ||
+                (resources[0] === "glass" && resources[1] === "brick" && resources[2] === "brick");
+            
+            // Check for vertical (Brick on top, Brick in middle, Glass on bottom)
+            const isValidVertical =
+                (resources[0] === "brick" && resources[1] === "brick" && resources[2] === "glass") ||
+                (resources[0] === "glass" && resources[1] === "brick" && resources[2] === "brick");
+
+            if (isValidHorizontal || isValidVertical) {
+                console.log("Tavern placement is valid.");
+                return true;
+            } else {
+                console.log("Invalid Tavern placement. Resources or orientation are incorrect.");
+                return false;
+            }
+        }
+    }
     
     // Add more buildings here...
 }
@@ -584,6 +629,63 @@ function checkCottagePlacement() {
         }
     }
 }
+
+
+
+function checkTavernPlacement() {
+    const gridCells = document.querySelectorAll(".grid-cell");
+    const gridSize = Math.sqrt(gridCells.length); // Assuming a square grid
+
+    let foundValidPlacement = false;
+
+    // Check for horizontal placement (Brick, Brick, Glass in a row)
+    for (let row = 0; row < gridSize; row++) {
+        for (let col = 0; col < gridSize - 2; col++) { // Ensure width of 3
+            const left = getResourceAt(row, col);
+            const middle = getResourceAt(row, col + 1);
+            const right = getResourceAt(row, col + 2);
+
+            if ((left === "brick" && middle === "brick" && right === "glass") ||
+                (left === "glass" && middle === "brick" && right === "brick")) {
+                foundValidPlacement = true;
+                break;
+            }
+        }
+        if (foundValidPlacement) break;
+    }
+
+    // Check for vertical placement (Brick on top, Brick in middle, Glass on bottom)
+    if (!foundValidPlacement) {
+        for (let col = 0; col < gridSize; col++) {
+            for (let row = 0; row < gridSize - 2; row++) { // Ensure height of 3
+                const top = getResourceAt(row, col);
+                const middle = getResourceAt(row + 1, col);
+                const bottom = getResourceAt(row + 2, col);
+
+                if ((top === "brick" && middle === "brick" && bottom === "glass") ||
+                    (top === "glass" && middle === "brick" && bottom === "brick")) {
+                    foundValidPlacement = true;
+                    break;
+                }
+            }
+            if (foundValidPlacement) break;
+        }
+    }
+
+    // Update the Tavern building card based on the result
+    const tavernCard = document.querySelector(".card[data-building='Tavern']");
+    if (tavernCard) {
+        if (foundValidPlacement && !tavernCard.classList.contains("readyToBuild")) {
+            tavernCard.classList.add("readyToBuild");
+            console.log("Tavern is now ready to build.");
+        } else if (!foundValidPlacement && tavernCard.classList.contains("readyToBuild")) {
+            tavernCard.classList.remove("readyToBuild");
+            console.log("Tavern is no longer ready to build.");
+        }
+    }
+}
+
+
 
 
 
