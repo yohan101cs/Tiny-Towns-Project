@@ -184,6 +184,122 @@ function attachGridListeners() {
                 }
             }
 
+            if (selectedBuilding === "Factory") {
+                if (selectedCells.has(this)) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else if (selectedCells.size === 1) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Factory.");
+                    return;
+                }
+            }
+
+            if (selectedBuilding === "Cathedral of Catarina") {
+                if (selectedCells.has(this)) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else if (selectedCells.size === 1) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Cathedral of Catarina.");
+                    return;
+                }
+            }
+
+            if (selectedBuilding === "Tavern") {
+                if (selectedCells.has(this)) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else if (selectedCells.size === 1) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Tavern.");
+                    return;
+                }
+            }
+
+            if (selectedBuilding === "Chapel") {
+                if (selectedCells.has(this)) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else if (selectedCells.size === 1) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Chapel.");
+                    return;
+                }
+            }
+
+            if (selectedBuilding === "Theater") {
+                if (selectedCells.has(this)) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else if (selectedCells.size === 1) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Theater.");
+                    return;
+                }
+            }
+
+            if (selectedBuilding === "Cottage") {
+                if (selectedCells.has(this)) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else if (selectedCells.size === 1) {
+                    placeBuilding(this, selectedBuilding);
+                    selectedBuilding = null;
+                    document.querySelectorAll(".cards-container .card").forEach(c => c.classList.remove("selected"));
+                    updateBuildingReadiness();
+                    return;
+                } else {
+                    console.log("Click on a selected tile to place the Cottage.");
+                    return;
+                }
+            }
+
+
+
             // If a resource is selected, place it on the board
             if (selectedResource) {
                 if (!this.hasChildNodes()) {
@@ -281,7 +397,7 @@ function placeBuilding(targetCell, buildingType) {
         "Chapel": "⛪",
         "Factory": "🏭",
         "Cottage": "🏠",
-        "Cathedral of Catarina": "🏛️"
+        "Cathedral of Catarina": "🟪"
     };
 
     buildingIcon.innerHTML = buildingIcons[buildingType] || "❓";
@@ -394,6 +510,19 @@ function areCorrectGridsSelected(buildingName) {
 
     // Factory: 3 contiguous tiles: 2 wood, 1 stone
     if (buildingName === "Factory") {
+        if (selectedArray.length !== 5) {
+            console.log("Factory requires exactly 5 tiles.");
+            return false;
+        }
+        if (!areCellsContiguous(selectedArray)) {
+            console.log("Factory tiles must be contiguous.");
+            return false;
+        }
+        return compareResourceSet(selectedArray, ["wood","brick","stone","stone","brick"]);
+    }
+
+    // Cathedral of Catarina: 1 tile (if you want a requirement, adjust here)
+    if (buildingName === "Cathedral of Catarina") {
         if (selectedArray.length !== 3) {
             console.log("Factory requires exactly 3 tiles.");
             return false;
@@ -402,19 +531,8 @@ function areCorrectGridsSelected(buildingName) {
             console.log("Factory tiles must be contiguous.");
             return false;
         }
-        return compareResourceSet(selectedArray, ["wood","wood","stone"]);
+        return compareResourceSet(selectedArray, ["glass","stone","wheat"]);
     }
-
-    // Cathedral of Catarina: 1 tile (if you want a requirement, adjust here)
-    if (buildingName === "Cathedral of Catarina") {
-        if (selectedArray.length !== 1) {
-            console.log("Cathedral of Catarina requires exactly 1 tile.");
-            return false;
-        }
-        return true;
-    }
-
-    return false;
 }
 
 // Check contiguity for buildings requiring multiple adjacent squares
