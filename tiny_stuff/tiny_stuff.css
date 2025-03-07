@@ -98,6 +98,7 @@
   .grey   { background-color: #808080; }
   .blue   { background-color: #87CEFA; }
   .red    { background-color: #B22222; }
+  .empty  {visibility: hidden;}
   
   /* Card Effect Text */
   .card-effect {
@@ -312,4 +313,87 @@
   align-items: center;
   width: 100%;
   height: 100%;
+}
+.card[data-building="Farm"] .card-pattern {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 2-column layout */
+  grid-template-rows: repeat(2, 1fr);  /* 2-row layout */
+  gap: 5px;  /* space between pattern squares */
+  width: 100px; /* Set a specific width */
+  height: 100px; /* Set a specific height */
+  margin: auto;  /* Centering with automatic margins */
+}
+
+
+.card[data-building="Well"] .card-pattern {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 2-column layout */
+  grid-template-rows: 1fr 1fr;  /* 2-row layout */
+  gap: 5px;  /* space between pattern squares */
+  width: 100px; /* Set a specific width */
+  height: 100px; /* Set a specific height */
+  margin: auto;  /* Centering with automatic margins */
+
+}
+
+.card[data-building="Cathedral of Catarina"] .card-pattern {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 2-column layout */
+  grid-template-rows: repeat(2, 1fr);  /* 2-row layout */
+  gap: 5px;  /* space between pattern squares */
+  width: 100px; /* Set a specific width */
+  height: 100px; /* Set a specific height */
+  margin: auto;  /* Centering with automatic margins */
+}
+
+.card[data-building="Theater"] .card-pattern {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;  /* 3 columns for the pattern */
+  grid-template-rows: 1fr 1fr;         /* 2 rows for top and bottom */
+  gap: 5px; /* Optional: Adjusts space between pattern squares */
+  width: 120px; /* Adjust width if necessary */
+  height: 120px; /* Adjust height if necessary */
+  margin: auto;  /* Centering with automatic margins */
+}
+
+.card[data-building="Tavern"] .card-pattern {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;  /* 3 columns for the pattern */
+  grid-template-rows: 1fr 1fr;         /* 2 rows for top and bottom */
+  gap: 5px; /* Optional: Adjust space between pattern squares */
+  width: 120px; /* Adjust width if necessary */
+  height: 120px; /* Adjust height if necessary */
+  margin: auto;  /* Centering with automatic margins */
+}
+
+.card[data-building="Chapel"] .card-pattern {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;  /* 3 columns for the pattern */
+  grid-template-rows: 1fr 1fr;         /* 2 rows for top and bottom */
+  gap: 5px; /* Optional: Adjust space between pattern squares */
+  width: 120px; /* Adjust width if necessary */
+  height: 120px; /* Adjust height if necessary */
+  margin-top: 0;  /* Optional: Remove top margin if present */
+  margin: auto;  /* Centering with automatic margins */
+}
+
+.card[data-building="Factory"] .card-pattern {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;  /* 4 columns for the pattern */
+  grid-template-rows: 1fr 1fr;             /* 2 rows for top and bottom */
+  gap: 5px; /* Optional: Adjust space between pattern squares */
+  width: 160px; /* Adjust width if necessary */
+  height: 120px; /* Adjust height if necessary */
+  margin-top: 0;  /* Optional: Remove top margin if present */
+  margin: auto;  /* Centering with automatic margins */
+}
+
+.card[data-building="Cottage"] .card-pattern {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 2-column layout */
+  grid-template-rows: repeat(2, 1fr);  /* 2-row layout */
+  gap: 5px;  /* space between pattern squares */
+  width: 100px; /* Set a specific width */
+  height: 100px; /* Set a specific height */
+  margin: auto;  /* Centering with automatic margins */
 }

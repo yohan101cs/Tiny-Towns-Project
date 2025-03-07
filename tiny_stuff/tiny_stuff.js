@@ -748,10 +748,3 @@ function getRowAndColumn(cell) {
     const col = cell.getAttribute('data-col');
     return [parseInt(row), parseInt(col)];
 }
-
-
-
-
-
-
-
